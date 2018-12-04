@@ -12,7 +12,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="PlayerKinematicBody2D" type="KinematicBody2D" index="0"]
+[node name="PlayerKinematicBody2D" type="KinematicBody2D"]
 
 scale = Vector2( 0.5, 0.5 )
 input_pickable = false
@@ -20,12 +20,13 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 
 build_mode = 0
 polygon = PoolVector2Array( -8.90912, -37.4314, 8.47662, -37.4314, 12.984, -11.4601, 35.7357, 2.06218, 44.3213, -6.0941, 49.258, -6.30873, 46.6823, 25.2432, 40.4578, 21.3797, 14.4865, 28.4628, 7.61807, 39.624, -9.12375, 38.1215, -14.7044, 28.0335, -40.8903, 24.17, -47.1148, 25.2432, -48.8319, -6.0941, -43.0367, -6.95265, -37.0268, 1.20363, -12.3433, -13.8211 )
+_sections_unfolded = [ "Material", "Visibility" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
 

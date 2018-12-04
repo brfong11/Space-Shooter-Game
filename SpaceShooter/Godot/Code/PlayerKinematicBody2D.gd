@@ -29,15 +29,15 @@ func get_input():
 func start(pos):
 	position = pos
 
-func take_damage():
-	health -= 1
+func take_damage(damage):
+	health -= damage
 	$Health.text = str("Health: ", health)
 
 func hit():
-	take_damage()
+	take_damage(20)
 	
 func shot(damage):
-	take_damage()
+	take_damage(damage)
 
 func _physics_process(delta):
 	
@@ -48,7 +48,10 @@ func _physics_process(delta):
 		velocity = velocity.bounce(collision.normal)
 		if collision.collider.has_method("hit"):
 			collision.collider.hit()
-			take_damage()
+			hit()
+	
+	if health <= 0:
+		get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
 #func get_input():
 #	velocity = Vector2()

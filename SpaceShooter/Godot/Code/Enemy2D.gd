@@ -13,6 +13,9 @@ func _ready():
 	velocity.y += speed
 	pass
 
+func die():
+	get_parent().kill_counter()
+	queue_free()
 
 func _physics_process(delta):
 
@@ -21,22 +24,21 @@ func _physics_process(delta):
 		velocity = velocity.bounce(collision.normal)
 		if collision.collider.has_method("hit"):
 			collision.collider.hit()
-			queue_free()
+			die()
 	
 func shot(damage):
 	
 	health -= damage
 	if health <= 0:
 		velocity = Vector2 (0,0)
-		queue_free()
+		die()
 	
 func hit():
-	queue_free()
+	die()
 	
 	
 
 func _on_ShootingTimer_timeout():
 	var laser = LASER.instance()
-	laser.set_type("ENEMY")
 	get_parent().add_child(laser)
 	laser.place($gun.global_position)

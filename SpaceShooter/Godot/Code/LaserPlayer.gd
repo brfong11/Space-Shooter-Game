@@ -4,7 +4,7 @@ extends "res://Code/Laser.gd"
 var laserDamage = 10
 
 func _ready():
-	set_bulletSpeed(100)
+	set_bulletSpeed(500)
 	set_direction("UP")
 	$AnimatedSprite.play("green")
 
