@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Code/Enemy2D.gd" type="Script" id=1]
+[ext_resource path="res://Art/png/enemyShip.png" type="Texture" id=2]
+
+
+[node name="Enemy" type="KinematicBody2D" index="0"]
+
+scale = Vector2( 0.5, 0.5 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform", "collision" ]
+speed = 50
+
+[node name="EnemySprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 2 )
+
+[node name="EnemyCollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( -18.5611, -20.0377, -10.4252, -25.8491, 8.94583, -25.8491, 17.4691, -19.4566, 29.6729, -22.7497, 28.898, -26.4302, 41.1018, -25.4616, 50.3999, -3.76606, 26.5735, 26.2591, 18.0502, 25.2905, 29.4792, -6.478, 19.2125, 0.301868, 12.6263, 15.0239, -11.9749, 15.2176, -19.7233, -0.472973, -28.8277, -6.67171, -17.9799, 23.9346, -24.9535, 25.2905, -49.1674, -2.02266, -41.4189, -25.0742, -30.9586, -25.2679, -30.5711, -21.2 )
+
+[node name="gun" type="Position2D" parent="." index="2"]
+
+position = Vector2( 0, 24 )
+
+[node name="ShootingTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="ShootingTimer" to="." method="_on_ShootingTimer_timeout"]
+
+

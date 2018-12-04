@@ -1,0 +1,228 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Code/Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Enemy2D.tscn" type="PackedScene" id=2]
+[ext_resource path="res://bg-ScreenAndScript/CloseStars.gd" type="Script" id=3]
+[ext_resource path="res://Art/png/Background/PurpleBackround.png" type="Texture" id=4]
+[ext_resource path="res://Art/png/Background/StarsClose.png" type="Texture" id=5]
+[ext_resource path="res://bg-ScreenAndScript/FarStars.gd" type="Script" id=6]
+[ext_resource path="res://Art/png/Background/starsFar.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=8]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends ParallaxBackground
+
+export var velocity = Vector2()
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called when the node is added to the scene for the first time.
+	# Initialization here
+	pass
+
+#func _process(delta):
+	#move_and_slide(velocity)
+
+"
+
+[sub_resource type="SegmentShape2D" id=2]
+
+custom_solver_bias = 0.0
+a = Vector2( 0.408447, -5.07363 )
+b = Vector2( 0.408447, 722.664 )
+
+[sub_resource type="SegmentShape2D" id=3]
+
+custom_solver_bias = 0.0
+a = Vector2( -480, 710 )
+b = Vector2( 0, 710 )
+
+[node name="Main" type="Node"]
+
+script = ExtResource( 1 )
+Enemy = ExtResource( 2 )
+
+[node name="Backround" type="ParallaxBackground" parent="." index="0"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+scroll_offset = Vector2( 0, 0 )
+scroll_base_offset = Vector2( 0, 0 )
+scroll_base_scale = Vector2( 1, 1 )
+scroll_limit_begin = Vector2( 0, 0 )
+scroll_limit_end = Vector2( 0, 0 )
+scroll_ignore_camera_zoom = false
+script = SubResource( 1 )
+_sections_unfolded = [ "Scroll" ]
+velocity = Vector2( 0, 0 )
+
+[node name="CloseStars" type="ParallaxLayer" parent="Backround" index="0"]
+
+motion_scale = Vector2( 1, 5 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 480, 720 )
+script = ExtResource( 3 )
+_sections_unfolded = [ "Motion", "Transform" ]
+backroundSpeed = 3
+
+[node name="PurpleBG" type="Sprite" parent="Backround/CloseStars" index="0"]
+
+texture = ExtResource( 4 )
+centered = false
+_sections_unfolded = [ "Offset" ]
+
+[node name="closeStarsSprite" type="Sprite" parent="Backround/CloseStars" index="1"]
+
+texture = ExtResource( 5 )
+centered = false
+_sections_unfolded = [ "Offset" ]
+
+[node name="FarStars" type="ParallaxLayer" parent="Backround" index="1"]
+
+motion_scale = Vector2( 1, 1 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 480, 720 )
+script = ExtResource( 6 )
+_sections_unfolded = [ "Motion" ]
+speed = 2
+
+[node name="FarStarsSprite" type="Sprite" parent="Backround/FarStars" index="0"]
+
+texture = ExtResource( 7 )
+centered = false
+_sections_unfolded = [ "Offset" ]
+
+[node name="CameraMover" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
+
+[node name="Camera2D" type="Camera2D" parent="CameraMover" index="0"]
+
+offset = Vector2( 240, 360 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 1.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Drag Margin", "Material", "Offset", "Smoothing", "Transform", "Visibility" ]
+
+[node name="Timer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = false
+autostart = true
+
+[node name="StartPosition" type="Position2D" parent="." index="3"]
+
+position = Vector2( 240, 680 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="EnemyPosition" type="Position2D" parent="." index="4"]
+
+position = Vector2( 244.922, -37.0427 )
+
+[node name="PlayerKinematicBody2D" parent="." index="5" instance=ExtResource( 8 )]
+
+collision_layer = 3
+collision_mask = 3
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Walls" type="Node" parent="." index="6"]
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls" index="0"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall" index="0"]
+
+shape = SubResource( 2 )
+
+[node name="RightWall" type="StaticBody2D" parent="Walls" index="1"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall" index="0"]
+
+position = Vector2( 480, 10 )
+shape = SubResource( 2 )
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls" index="2"]
+
+editor/display_folded = true
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall" index="0"]
+
+position = Vector2( 480, 10 )
+shape = SubResource( 3 )
+
+[node name="TopWall" type="StaticBody2D" parent="Walls" index="3"]
+
+input_pickable = false
+collision_layer = 2
+collision_mask = 2
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall" index="0"]
+
+position = Vector2( 480, -710 )
+shape = SubResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+
